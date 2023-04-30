@@ -30,7 +30,7 @@ export default function Home() {
 
   console.log(data);
   return (
-    <div className="grid grid-cols-1 gap-2 py-4 sm:grid-cols-3 lg:grid-cols-4">
+    <div className="grid grid-cols-1 gap-2 py-4 sm:grid-cols-3 lg:grid-cols-4 ">
       {isLoading &&
         [...Array(30)].map((_, index) => <VideoCardskeleton key={index} />)}
       {!isLoading &&
