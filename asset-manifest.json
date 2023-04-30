@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/dreamcoding/static/css/main.16ef1f2e.css",
-    "main.js": "/dreamcoding/static/js/main.3a3e11d1.js",
+    "main.js": "/dreamcoding/static/js/main.9284096f.js",
     "static/media/Youtube404.svg": "/dreamcoding/static/media/Youtube404.b91069567808c4d4dfe137fa3be1eee0.svg",
     "static/media/Loading.svg": "/dreamcoding/static/media/Loading.005c7fa191a6bd00e0be59e590175ebb.svg",
     "static/media/YoutubeLogo.svg": "/dreamcoding/static/media/YoutubeLogo.4f6991434276dbf2e345b5a1e9a96278.svg",
     "index.html": "/dreamcoding/index.html",
     "static/media/Search.svg": "/dreamcoding/static/media/Search.55d530c1351e8e9a884f0ac527be0ac4.svg",
     "main.16ef1f2e.css.map": "/dreamcoding/static/css/main.16ef1f2e.css.map",
-    "main.3a3e11d1.js.map": "/dreamcoding/static/js/main.3a3e11d1.js.map"
+    "main.9284096f.js.map": "/dreamcoding/static/js/main.9284096f.js.map"
   },
   "entrypoints": [
     "static/css/main.16ef1f2e.css",
-    "static/js/main.3a3e11d1.js"
+    "static/js/main.9284096f.js"
   ]
 }
