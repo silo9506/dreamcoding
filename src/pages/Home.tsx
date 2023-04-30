@@ -13,6 +13,7 @@ export interface item {
 
 export default function Home() {
   const queryKey = "Popular";
+
   const { data, isLoading, isError } = useAxios({
     params: {
       url: "https://www.googleapis.com/youtube/v3/videos",
@@ -23,19 +24,24 @@ export default function Home() {
         regionCode: "Kr",
         chart: "mostPopular",
         fields:
-          "items(id,snippet(channelTitle,channelId,thumbnails(high,maxres),publishedAt,title))",
+          "items(id,snippet(categoryId,channelTitle,channelId,thumbnails(high,maxres),publishedAt,title))",
       },
     },
   });
 
-  console.log(data);
   return (
     <div className="grid grid-cols-1 gap-2 py-4 sm:grid-cols-3 lg:grid-cols-4 ">
       {isLoading &&
         [...Array(30)].map((_, index) => <VideoCardskeleton key={index} />)}
       {!isLoading &&
         data?.items.map((item: item) => {
-          return <VideoCard key={item.id as string} item={item}></VideoCard>;
+          return (
+            <VideoCard
+              key={item.id as string}
+              id={item.id as string}
+              item={item}
+            ></VideoCard>
+          );
         })}
     </div>
   );

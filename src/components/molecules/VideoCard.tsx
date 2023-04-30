@@ -7,16 +7,21 @@ interface VideoCardProps {
   ismini?: boolean;
   skeleton?: boolean;
   ref?: any;
+  id: string;
 }
-export default function VideoCard({ item, isflex, ismini }: VideoCardProps) {
+export default function VideoCard({
+  item,
+  isflex,
+  ismini,
+  id,
+}: VideoCardProps) {
   const data = useISOSstring(item.snippet.publishedAt);
   const navigate = useNavigate();
-  const ID = typeof item.id === "string" ? item.id : item.id.videoId;
 
   const onClick = () => {
-    navigate(`/detail/${ID}`, {
+    navigate(`/detail/${id}`, {
       state: {
-        id: ID,
+        id: id,
         item: item,
       },
     });
@@ -44,7 +49,7 @@ export default function VideoCard({ item, isflex, ismini }: VideoCardProps) {
             {!ismini && (
               <img
                 className="border w-[36px] h-[36px] mr-2 border-transparent rounded-full"
-                src={item.channel.thumbnails.default.url}
+                src={item.channel.snippet.thumbnails.default.url}
               />
             )}
             <h5 className="overflow-hidden text-sm text-gray-400 break-all ">
@@ -77,7 +82,7 @@ export default function VideoCard({ item, isflex, ismini }: VideoCardProps) {
           <div className="flex-shrink-0 mr-[12px]">
             <img
               className="border w-[36px] h-[36px] border-transparent rounded-full"
-              src={item.channel.thumbnails.default.url}
+              src={item.channel.snippet.thumbnails.default.url}
             />
           </div>
           <div className="">

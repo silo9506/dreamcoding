@@ -3,7 +3,7 @@ import { ReactComponent as NotYoutube } from "../assets/svg/Youtube404.svg";
 
 export default function NotFound() {
   return (
-    <div className="flex flex-col h-screen px-4 sm:px-8">
+    <div className="relative pt-[40px] sm:pt-[80px] px-4 text-white bg-black sm:px-8 min-h-screen">
       <Header />
       <div className="flex flex-col items-center justify-center flex-1 p-4">
         <NotYoutube className="w-[250px] h-[250px] max-w-[500px] max-h-[500px] sm:w-full sm:h-full min-w-0 min-h-0" />

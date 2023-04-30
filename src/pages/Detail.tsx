@@ -5,10 +5,14 @@ import { VideoCardskeleton } from "../components/molecules/VideoCard";
 import VideoCard from "../components/molecules/VideoCard";
 import { ReactComponent as Loading } from "../assets/svg/Loading.svg";
 import { item } from "./Home";
+import { useState } from "react";
+import ExtraVideos from "../components/molecules/ExtraVideos";
+import { useEffect } from "react";
 
 export default function Detail() {
   const location = useLocation();
   const params = useParams();
+  const [playListId, setPlayListId] = useState<string | null>(null);
   const {
     data: playVideoData,
     isLoading: playVideoLoading,
@@ -28,31 +32,35 @@ export default function Detail() {
       },
     },
   });
-  console.log("플레이비디오 데이타");
-  console.log(playVideoData);
-  const {
-    data: extraVideosData,
-    isLoading: extraVideosLoading,
-    isError: extraVideosError,
-  } = useAxios({
-    params: {
-      url: "https://www.googleapis.com/youtube/v3/search",
-      queryKey: "Extra",
-      id: location.state ? location.state.id : params.id,
-      params: {
-        part: "snippet",
-        relatedToVideoId: location.state ? location.state.id : params.id,
-        maxResults: 25,
-        regionCode: "Kr",
-        type: "video",
-        fields:
-          "items(id,snippet(channelTitle,channelId,thumbnails(medium,maxres),publishedAt,title))",
-      },
-    },
-  });
 
-  console.log("엑스트라비디오 데이타");
-  console.log(extraVideosData);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  // const {
+  //   data: extraVideosData,
+  //   isLoading: extraVideosLoading,
+  //   isError: extraVideosError,
+  // } = useAxios({
+  //   params: {
+  //     url: "https://www.googleapis.com/youtube/v3/search",
+  //     queryKey: "Extra",
+  //     id: location.state ? location.state.id : params.id,
+  //     params: {
+  //       part: "snippet",
+  //       relatedToVideoId: location.state ? location.state.id : params.id,
+  //       maxResults: 25,
+  //       regionCode: "Kr",
+  //       type: "video",
+  //       fields:
+  //         "items(id,snippet(channelTitle,channelId,thumbnails(medium,maxres),publishedAt,title))",
+  //     },
+  //   },
+  // });
+
+  // console.log("엑스트라비디오 데이타");
+  // console.log(extraVideosData);
+  console.log(playVideoData);
 
   return (
     <div className="flex flex-col gap-4 sm:flex-col md:flex-row">
@@ -68,10 +76,21 @@ export default function Detail() {
           id={location.state ? location.state.id : params.id}
         />
       )}
-
-      <div className="md:w-[30%] flex flex-col p-2 gap-2">
+      {playVideoLoading ? (
+        [...Array(20)].map((_, index) => (
+          <VideoCardskeleton ismini={true} flex={true} key={index} />
+        ))
+      ) : (
+        <ExtraVideos
+          playListId={
+            playVideoData.items[0].channel.contentDetails.relatedPlaylists
+              .uploads
+          }
+        />
+      )}
+      {/* <div className="md:w-[30%] flex flex-col p-2 gap-2">
         {extraVideosLoading &&
-          [...Array(12)].map((_, index) => (
+          [...Array(20)].map((_, index) => (
             <VideoCardskeleton ismini={true} flex={true} key={index} />
           ))}
         {!extraVideosLoading &&
@@ -90,7 +109,30 @@ export default function Detail() {
               ismini={true}
             />
           ))}
-      </div>
+      </div> */}
+
+      {/* <div className="md:w-[30%] flex flex-col p-2 gap-2">
+        {extraVideosLoading &&
+          [...Array(20)].map((_, index) => (
+            <VideoCardskeleton ismini={true} flex={true} key={index} />
+          ))}
+        {!extraVideosLoading &&
+          extraVideosData?.items.map((item: item) => (
+            <VideoCard
+              key={
+                (
+                  item.id as {
+                    kind: string;
+                    videoId: string;
+                  }
+                ).videoId
+              }
+              item={item}
+              isflex={true}
+              ismini={true}
+            />
+          ))}
+      </div> */}
     </div>
   );
 }

@@ -36,7 +36,7 @@ export default function PlayVideo({ item, id, isLoading }: PlayVideoProps) {
       <div className="flex items-center py-4">
         <img
           className="border w-[36px] h-[36px] mr-2 border-transparent rounded-full"
-          src={item.channel.thumbnails.default.url}
+          src={item.channel.snippet.thumbnails.default.url}
         />
         <h1>{item.snippet.channelTitle}</h1>
       </div>
