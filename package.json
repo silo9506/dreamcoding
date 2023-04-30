@@ -26,7 +26,9 @@
     "build": "npm run build:css && react-scripts build",
     "build:css": "tailwindcss -i ./src/index.css -o ./src/tailwind.css",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -34,6 +36,7 @@
       "react-app/jest"
     ]
   },
+  "homepage": "https://silo9506.github.io/dreamcoding",
   "browserslist": {
     "production": [
       ">0.2%",

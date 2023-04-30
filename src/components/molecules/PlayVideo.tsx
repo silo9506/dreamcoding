@@ -8,7 +8,6 @@ interface PlayVideoProps {
 
 export default function PlayVideo({ item, id, isLoading }: PlayVideoProps) {
   const [moreDescription, setMoreDescription] = useState(false);
-
   const Counter = (str: string) => {
     if (str === undefined) return;
     let result = str;
@@ -34,7 +33,11 @@ export default function PlayVideo({ item, id, isLoading }: PlayVideoProps) {
       <h3 className="overflow-hidden font-medium break-all line-clamp-1 sm:line-clamp-2">
         {item.snippet.title}
       </h3>
-      <div className="flex py-4">
+      <div className="flex items-center py-4">
+        <img
+          className="border w-[36px] h-[36px] mr-2 border-transparent rounded-full"
+          src={item.channel.thumbnails.default.url}
+        />
         <h1>{item.snippet.channelTitle}</h1>
       </div>
       <div className="bg-[#ffffff1a] p-4 border rounded border-transparent">

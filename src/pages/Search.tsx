@@ -11,31 +11,27 @@ export default function Search() {
   const [nextPage, setNextPage] = useState<null | string | undefined>(null);
   const [bundleData, setBundleData] = useState<any[]>([]);
   const { q } = useParams();
-  const location = useLocation();
   const { data, isLoading, isError } = useAxios({
     params: {
       url: "https://www.googleapis.com/youtube/v3/search",
       queryKey: queryKey,
       params: {
         part: "snippet",
-        maxResults: 8,
+        maxResults: 50,
         q,
         regionCode: "Kr",
         type: "video",
         fields:
-          "nextPageToken,items(id(videoId),snippet(channelTitle,description,thumbnails(medium),title,publishedAt))",
+          "nextPageToken,items(id(videoId),snippet(channelTitle,channelId,description,thumbnails(medium),title,publishedAt))",
       },
     },
     pageToken: nextPage,
     q,
   });
-  console.log(location);
+
   useEffect(() => {
     if (!isLoading) {
-      setBundleData((prev) => {
-        const uniqueItems = new Set([...prev, ...data.items]);
-        return Array.from(uniqueItems);
-      });
+      addBundleDate();
     }
   }, [isLoading, data]);
 
@@ -43,12 +39,28 @@ export default function Search() {
     clearBundleData();
   }, [q]);
 
+  const addBundleDate = () => {
+    setBundleData((prev) => {
+      const uniqueItems = new Set([...prev, ...data.items]);
+      console.log("데이터채우기");
+      console.log(bundleData);
+      console.log(data);
+      return Array.from(uniqueItems);
+    });
+  };
+
   const clearBundleData = () => {
     window.scrollTo(0, 0);
     setBundleData([]);
     setNextPage(null);
+    if (!isLoading) {
+      addBundleDate();
+    }
+    console.log("클리어");
   };
 
+  console.log(data);
+  console.log(data?.nextPageToken);
   const lastVideo = useCallback(
     (node: any) => {
       if (isLoading) return;
@@ -63,7 +75,7 @@ export default function Search() {
     },
     [isLoading, data]
   );
-  // console.log("넥스트토큰" + data?.nextPageToken);
+
   console.log(data?.nextPageToken);
   console.log(data);
   return (

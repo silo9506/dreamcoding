@@ -40,9 +40,17 @@ export default function VideoCard({ item, isflex, ismini }: VideoCardProps) {
           <h5 className="overflow-hidden text-sm text-gray-400 break-all ">
             {data}
           </h5>
-          <h5 className="overflow-hidden text-sm text-gray-400 break-all ">
-            {item.snippet.channelTitle}
-          </h5>
+          <div className="flex items-center">
+            {!ismini && (
+              <img
+                className="border w-[36px] h-[36px] mr-2 border-transparent rounded-full"
+                src={item.channel.thumbnails.default.url}
+              />
+            )}
+            <h5 className="overflow-hidden text-sm text-gray-400 break-all ">
+              {item.snippet.channelTitle}
+            </h5>
+          </div>
           {!ismini && (
             <h5 className="overflow-hidden text-sm text-gray-400 break-all line-clamp-1 sm:line-clamp-2 ">
               {item.snippet.description}
@@ -65,16 +73,25 @@ export default function VideoCard({ item, isflex, ismini }: VideoCardProps) {
               : item.snippet.thumbnails.high.url
           }
         />
-        <div className="px-3 py-1 ">
-          <h3 className="overflow-hidden font-medium line-clamp-2 sm:line-clamp-1">
-            {item.snippet.title}
-          </h3>
-          <h5 className="overflow-hidden text-sm text-gray-400 truncate">
-            {item.snippet.channelTitle}
-          </h5>
-          <h5 className="overflow-hidden text-sm text-gray-400 truncate">
-            {data}
-          </h5>
+        <div className="flex py-2">
+          <div className="flex-shrink-0 mr-[12px]">
+            <img
+              className="border w-[36px] h-[36px] border-transparent rounded-full"
+              src={item.channel.thumbnails.default.url}
+            />
+          </div>
+          <div className="">
+            <h3 className="overflow-hidden font-medium line-clamp-2 sm:line-clamp-1">
+              {item.snippet.title}
+            </h3>
+
+            <h5 className="overflow-hidden text-sm text-gray-400 truncate">
+              {item.snippet.channelTitle}
+            </h5>
+            <h5 className="overflow-hidden text-sm text-gray-400 truncate">
+              {data}
+            </h5>
+          </div>
         </div>
       </div>
     );

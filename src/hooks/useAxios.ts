@@ -18,7 +18,6 @@ interface useAxiosReturn {
   data: any;
   isLoading: boolean;
   isError: boolean;
-  // nextPageToken: string;
 }
 
 export default function useAxios({
@@ -27,18 +26,44 @@ export default function useAxios({
   q,
 }: useAxiosProps): useAxiosReturn {
   const fetchVideos = async () => {
-    const response = await axios.get(params.url, {
+    const videoResponse = await axios.get(params.url, {
       params: {
         ...params.params,
         key: process.env.REACT_APP_YOUTUBE_API_KEY,
         pageToken: pageToken,
       },
     });
+
+    const ids = videoResponse.data.items.map((item: any) => {
+      return item.snippet.channelId;
+    });
+
+    const ChannelResponse = await axios.get(
+      "https://www.googleapis.com/youtube/v3/channels",
+      {
+        params: {
+          part: "snippet",
+          id: ids.join(","),
+          maxResults: 50,
+          key: process.env.REACT_APP_YOUTUBE_API_KEY,
+        },
+      }
+    );
+
+    const response = videoResponse.data.items.map((item: any) => {
+      const channel = ChannelResponse.data.items.find((channelItem: any) => {
+        return item.snippet.channelId === channelItem.id;
+      });
+      return {
+        ...item,
+        channel: channel ? channel.snippet : null,
+      };
+    });
+    console.log(videoResponse.data.nextPageToken);
     console.log("API호출됨");
-    return response.data;
+    return { items: response, nextPageToken: videoResponse.data.nextPageToken };
   };
 
-  console.log(params.params.maxResults);
   const { isLoading, isError, data } = useQuery(
     [params.queryKey, q && q, params.id && params.id, pageToken && pageToken],
     fetchVideos,
@@ -48,23 +73,6 @@ export default function useAxios({
       cacheTime: 100000,
     }
   );
-
-  // const promises = params.map((param) => fetchVideos(param.url));
-
-  // const { isLoading, isError, data } = useQuery(
-  //   params.map((param) => param.queryKey),
-  //   async () => {
-  //     const PromiseAll = await Promise.all(promises);
-
-  //     const data = PromiseAll?.reduce((prev, curr, index) => {
-  //       const key = params[index].queryKey;
-
-  //       return { ...prev, [key]: curr };
-  //     }, {});
-
-  //     return data;
-  //   }
-  // );
 
   return { data, isLoading, isError };
 }

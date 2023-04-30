@@ -24,7 +24,7 @@ export default function Detail() {
         regionCode: "Kr",
         id: location.state ? location.state.id : params.id,
         fields:
-          "items(snippet(channelTitle,description,publishedAt,title),statistics(viewCount,likeCount))",
+          "items(snippet(channelTitle,channelId,description,publishedAt,title),statistics(viewCount,likeCount))",
       },
     },
   });
@@ -42,11 +42,11 @@ export default function Detail() {
       params: {
         part: "snippet",
         relatedToVideoId: location.state ? location.state.id : params.id,
-        maxResults: 15,
+        maxResults: 25,
         regionCode: "Kr",
         type: "video",
         fields:
-          "items(id,snippet(channelTitle,thumbnails(medium,maxres),publishedAt,title))",
+          "items(id,snippet(channelTitle,channelId,thumbnails(medium,maxres),publishedAt,title))",
       },
     },
   });

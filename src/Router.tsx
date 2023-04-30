@@ -7,27 +7,30 @@ import Detail from "./pages/Detail";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Index />,
-    errorElement: <NotFound />,
-    children: [
-      {
-        index: true,
-        element: <Home />,
-      },
-      {
-        path: "search/:q",
-        element: <Search />,
-      },
-      {
-        path: "detail/:id",
-        element: <Detail />,
-      },
-    ],
-  },
-]);
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <Index />,
+      errorElement: <NotFound />,
+      children: [
+        {
+          index: true,
+          element: <Home />,
+        },
+        {
+          path: "search/:q",
+          element: <Search />,
+        },
+        {
+          path: "detail/:id",
+          element: <Detail />,
+        },
+      ],
+    },
+  ],
+  { basename: process.env.PUBLIC_URL }
+);
 
 const Router = () => {
   return (
